@@ -1,0 +1,156 @@
+
+import { ConcurrentMode, AutomaticBatching, CreateRoot, SuspenseForDataFetching, EnhancedHooks } from './examples'
+
+# Welcome to React 18.2 Features Presentation
+
+Explore the new features and improvements in React 18.2 with practical examples.
+
+---
+
+# Mastering Interactivity with Concurrent Mode
+
+Explore how Concurrent Mode optimizes responsiveness in React applications.
+
+**Before:**
+```jsx
+const handleChange = (input) => {
+  setInput(input);
+};
+return <input value={input} onChange={e => handleChange(e.target.value)} />;
+```
+
+**After:**
+```jsx
+import { startTransition } from 'react';
+const handleChange = (nextInput) => {
+  startTransition(() => {
+    setInput(nextInput);
+  });
+};
+return <input value={input} onChange={e => handleChange(e.target.value)} />;
+```
+
+<ConcurrentMode />
+
+- Improves UI responsiveness under load.
+- Enables background rendering of non-urgent updates.
+- Facilitates smoother visual transitions.
+
+---
+
+# Enhancements in Automatic Batching
+
+Automatic Batching now extends to more scenarios, improving application performance.
+
+**Before:**
+```jsx
+setTimeout(() => {
+  setCount(c => c + 1);
+  setText('Updated text');
+}, 1000);
+```
+
+**After:**
+```jsx
+setTimeout(() => {
+  setCount(c => c + 1);
+  setText('Updated text');
+}, 1000);
+```
+
+<AutomaticBatching />
+
+- Reduces the number of re-renders required.
+- Optimizes rendering performance in asynchronous events.
+- Streamlines state updates across components.
+
+---
+
+# Utilizing `createRoot` for Enhanced Initial Rendering
+
+`createRoot` introduces a more powerful way to initialize React applications.
+
+**Before:**
+```jsx
+import ReactDOM from 'react-dom';
+ReactDOM.render(<App />, document.getElementById('app'));
+```
+
+**After:**
+```jsx
+import { createRoot } from 'react-dom/client';
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<App />);
+```
+
+<CreateRoot />
+
+- Supports concurrent features out-of-the-box.
+- Provides more control over the rendering process.
+- Enhances app startup performance.
+
+---
+
+# Leveraging Suspense for Data Fetching
+
+Suspense now supports data fetching natively, simplifying component code.
+
+**Before:**
+```jsx
+function MyComponent() {
+  const data = fetchData();
+  if (!data) return <h1>Loading...</h1>;
+  return <div>{data}</div>;
+}
+```
+
+**After:**
+```jsx
+import { Suspense } from 'react';
+function MyComponent() {
+  const data = fetchData(); // Assume this uses Suspense internally
+  return <div>{data}</div>;
+}
+function App() {
+  return (
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <MyComponent />
+    </Suspense>
+  );
+}
+```
+
+<SuspenseForDataFetching />
+
+- Reduces boilerplate for loading states.
+- Enhances readability and maintainability.
+- Enables smoother user experiences during data fetches.
+
+---
+
+# Fine-Tuning Application Behavior with Enhanced Hooks
+
+Enhanced Hooks in React 18 bring more predictability and efficiency.
+
+**Before:**
+```jsx
+useEffect(() => {
+  console.log('Effect has run');
+}, [dependencies]);
+```
+
+**After:**
+```jsx
+useEffect(() => {
+  console.log('Effect has run');
+}, [dependencies]);
+```
+
+<EnhancedHooks />
+
+- Ensures hooks run only when necessary.
+- Reduces unnecessary re-renders.
+- Improves overall application performance and resource utilization.
+
+---
